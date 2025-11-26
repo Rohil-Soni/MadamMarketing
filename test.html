@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Card Hover Effect</title>
+        <style>
+            body {
+                background: #0f172a;
+                font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+            }
+
+            .card {
+                width: 260px;
+                padding: 1.5rem;
+                border-radius: 18px;
+                background: #111827;
+                color: #e5e7eb;
+                box-shadow: 0 12px 30px rgba(15, 23, 42, 0.6);
+                border: 1px solid rgba(148, 163, 184, 0.2);
+                transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+            }
+
+            .card:hover {
+                transform: translateY(-6px) scale(1.03);
+                box-shadow: 0 20px 45px rgba(15, 23, 42, 0.85);
+                border-color: rgba(129, 140, 248, 0.8);
+            }
+
+            .card h2 {
+                margin-top: 0;
+                margin-bottom: 0.5rem;
+                font-size: 1.5rem;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="card">
+            <h2>Card Title</h2>
+            <p>Some description text for the card.</p>
+        </div>
+    </body>
+</html>
