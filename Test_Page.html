@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Test Webpage - Stacking Cards</title>
+  <title>Test Webpage - Red Stack</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     :root {
-      --bg: #020617;
-      --panel: #020617;
-      --card: #020617;
-      --accent: #4f46e5;
+      --bg: #050509;
+      --card: #06050a;
+      --accent: #ff1a3c;      /* bright red */
+      --accent-soft: #ff4b68; /* soft red */
       --top: 90px;
       --gap: 16px;
     }
@@ -23,8 +23,25 @@
     body {
       min-height: 200vh;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      background: radial-gradient(circle at top, #1e293b 0, #020617 45%);
-      color: #e5e7eb;
+      color: #f9fafb;
+      background-color: var(--bg);
+      background-image:
+        radial-gradient(circle at 0% 0%, rgba(255, 255, 255, 0.04) 0, transparent 55%),
+        radial-gradient(circle at 100% 0%, rgba(255, 26, 60, 0.18) 0, transparent 60%),
+        radial-gradient(circle at 50% 100%, rgba(255, 26, 60, 0.22) 0, transparent 60%),
+        radial-gradient(circle at 10% 80%, rgba(255, 255, 255, 0.02) 0, transparent 55%);
+      background-attachment: fixed;
+    }
+
+    /* subtle grain effect */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: -40px;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='noStitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.16'/%3E%3C/svg%3E");
+      mix-blend-mode: soft-light;
+      z-index: -1;
     }
 
     header {
@@ -34,14 +51,20 @@
     header h1 {
       font-size: clamp(1.9rem, 3vw, 2.4rem);
       font-weight: 700;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    header h1 span {
+      color: var(--accent);
     }
 
     header p {
-      margin-top: 8px;
-      max-width: 34rem;
-      font-size: 0.95rem;
-      color: #9ca3af;
+      margin-top: 10px;
+      max-width: 36rem;
+      font-size: 0.96rem;
+      color: #e5e7eb;
+      opacity: 0.85;
     }
 
     main {
@@ -60,10 +83,14 @@
       position: sticky;
       top: 24px;
       margin-bottom: 24px;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: #6b7280;
+      letter-spacing: 0.16em;
+      color: #9ca3af;
+    }
+
+    .stack-label span {
+      color: var(--accent-soft);
     }
 
     .card {
@@ -72,14 +99,17 @@
       margin: 0;
       padding: 24px 22px 22px;
       border-radius: 20px;
-      background: radial-gradient(circle at top left, #111827 0, #020617 55%);
-      border: 1px solid rgba(148, 163, 184, 0.35);
+      background:
+        linear-gradient(135deg, rgba(255, 26, 60, 0.12), transparent 45%),
+        radial-gradient(circle at top left, rgba(255, 255, 255, 0.08) 0, transparent 55%),
+        var(--card);
+      border: 1px solid rgba(248, 250, 252, 0.05);
       box-shadow:
-        0 28px 60px rgba(15, 23, 42, 0.9),
+        0 28px 60px rgba(0, 0, 0, 0.9),
         0 0 0 1px rgba(15, 23, 42, 0.9);
       transform-origin: top center;
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
       overflow: hidden;
     }
 
@@ -88,21 +118,22 @@
     }
 
     .card-title {
-      font-size: 0.95rem;
+      font-size: 0.88rem;
       text-transform: uppercase;
-      letter-spacing: 0.18em;
+      letter-spacing: 0.16em;
       color: #9ca3af;
       margin-bottom: 12px;
     }
 
     .card h2 {
-      font-size: 1.2rem;
+      font-size: 1.22rem;
       margin-bottom: 6px;
     }
 
     .card p {
       font-size: 0.9rem;
-      color: #9ca3af;
+      color: #e5e7eb;
+      opacity: 0.88;
       max-width: 32rem;
     }
 
@@ -110,25 +141,27 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 4px 10px;
+      padding: 4px 11px;
       border-radius: 999px;
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid rgba(79, 70, 229, 0.9);
-      color: #c7d2fe;
+      background: rgba(6, 5, 10, 0.9);
+      border: 1px solid rgba(255, 26, 60, 0.9);
+      color: #fee2e2;
       font-size: 0.7rem;
       margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
     }
 
     .pill-dot {
       width: 7px;
       height: 7px;
       border-radius: 50%;
-      background: #4f46e5;
-      box-shadow: 0 0 10px rgba(79, 70, 229, 0.9);
+      background: var(--accent);
+      box-shadow: 0 0 12px rgba(255, 26, 60, 0.9);
     }
 
     .accent {
-      color: #818cf8;
+      color: var(--accent-soft);
     }
 
     /* depth illusion */
@@ -147,27 +180,27 @@
 </head>
 <body>
   <header>
-    <h1>Test Webpage - Stacking Cards</h1>
+    <h1><span>Test</span> Webpage · Stacking Cards</h1>
     <p>
-      This is a simple test webpage. Scroll down to see how the cards move up,
-      stick near the top, and overlap each other while you keep scrolling.
+      This is a test page in a red, white, and black theme. Scroll down to see
+      each card slide up, stick near the top, and overlap the previous one.
     </p>
   </header>
 
   <main>
     <section class="stack-wrap">
-      <div class="stack-label">Test section</div>
+      <div class="stack-label"><span>test mode</span> · scroll to inspect</div>
 
       <article class="card">
         <div class="pill">
           <span class="pill-dot"></span>
           TEST 01
         </div>
-        <div class="card-title">Basic information</div>
-        <h2>Welcome to the test page</h2>
+        <div class="card-title">Basic check</div>
+        <h2>Is the layout visible and clean?</h2>
         <p>
-          This card is here just to test the layout and scroll behavior.
-          We can replace this text later with any real content you need.
+          Use this card to confirm that the font, spacing, and colors feel
+          readable in the red, white, and black theme on your screen.
         </p>
       </article>
 
@@ -176,11 +209,11 @@
           <span class="pill-dot"></span>
           TEST 02
         </div>
-        <div class="card-title">Scroll demo</div>
-        <h2>Watch the cards stack on scroll</h2>
+        <div class="card-title">Scroll behavior</div>
+        <h2>Do the cards stack correctly?</h2>
         <p>
-          When you scroll down, this card will move up and overlap the first
-          card so you can check that the stacking animation works correctly.
+          Scroll down slowly and make sure this card moves up, sticks near the
+          top, and overlaps the first card without any jumpy behavior.
         </p>
       </article>
 
@@ -189,11 +222,11 @@
           <span class="pill-dot"></span>
           TEST 03
         </div>
-        <div class="card-title">Placeholder text</div>
-        <h2>Use this area for testing</h2>
+        <div class="card-title">Text samples</div>
+        <h2>Try different lengths of content</h2>
         <p>
-          This card is used to try different lengths of text, headings, or buttons
-          to see how the design looks with our own sample content.
+          Replace this paragraph with short or long sample text to see how your
+          real copy will look inside this stacking card layout.
         </p>
       </article>
 
@@ -202,11 +235,11 @@
           <span class="pill-dot"></span>
           TEST 04
         </div>
-        <div class="card-title">Layout check</div>
-        <h2>Check spacing and overlap</h2>
+        <div class="card-title">Contrast check</div>
+        <h2>Check red highlights on dark</h2>
         <p>
-          Scroll slowly and notice the distance between the cards, the sticky
-          position, and the overlap effect while testing on different screens.
+          Notice how the <span class="accent">red accents</span> stand out on
+          the dark background while white text stays easy to read.
         </p>
       </article>
     </section>
