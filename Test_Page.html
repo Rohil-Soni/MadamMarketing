@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Test Webpage - Stacking Cards</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #020617;
+      --panel: #020617;
+      --card: #020617;
+      --accent: #4f46e5;
+      --top: 90px;
+      --gap: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 200vh;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: radial-gradient(circle at top, #1e293b 0, #020617 45%);
+      color: #e5e7eb;
+    }
+
+    header {
+      padding: 32px 6vw 0;
+    }
+
+    header h1 {
+      font-size: clamp(1.9rem, 3vw, 2.4rem);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    header p {
+      margin-top: 8px;
+      max-width: 34rem;
+      font-size: 0.95rem;
+      color: #9ca3af;
+    }
+
+    main {
+      width: min(900px, 92vw);
+      margin: 0 auto;
+      padding-bottom: 60vh;
+    }
+
+    .stack-wrap {
+      margin-top: 40px;
+      padding: 32px 0 120px;
+      position: relative;
+    }
+
+    .stack-label {
+      position: sticky;
+      top: 24px;
+      margin-bottom: 24px;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #6b7280;
+    }
+
+    .card {
+      position: sticky;
+      top: var(--top);
+      margin: 0;
+      padding: 24px 22px 22px;
+      border-radius: 20px;
+      background: radial-gradient(circle at top left, #111827 0, #020617 55%);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      box-shadow:
+        0 28px 60px rgba(15, 23, 42, 0.9),
+        0 0 0 1px rgba(15, 23, 42, 0.9);
+      transform-origin: top center;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      overflow: hidden;
+    }
+
+    .card + .card {
+      margin-top: var(--gap);
+    }
+
+    .card-title {
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: #9ca3af;
+      margin-bottom: 12px;
+    }
+
+    .card h2 {
+      font-size: 1.2rem;
+      margin-bottom: 6px;
+    }
+
+    .card p {
+      font-size: 0.9rem;
+      color: #9ca3af;
+      max-width: 32rem;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(79, 70, 229, 0.9);
+      color: #c7d2fe;
+      font-size: 0.7rem;
+      margin-bottom: 10px;
+    }
+
+    .pill-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #4f46e5;
+      box-shadow: 0 0 10px rgba(79, 70, 229, 0.9);
+    }
+
+    .accent {
+      color: #818cf8;
+    }
+
+    /* depth illusion */
+    .card:nth-child(2) { transform: scale(0.997); }
+    .card:nth-child(3) { transform: scale(0.994); }
+    .card:nth-child(4) { transform: scale(0.991); }
+    .card:nth-child(5) { transform: scale(0.988); }
+
+    @media (max-width: 640px) {
+      :root { --top: 72px; }
+      header { padding-top: 24px; }
+      .stack-wrap { margin-top: 28px; }
+      .card { padding: 20px 16px 18px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Test Webpage - Stacking Cards</h1>
+    <p>
+      This is a simple test webpage. Scroll down to see how the cards move up,
+      stick near the top, and overlap each other while you keep scrolling.
+    </p>
+  </header>
+
+  <main>
+    <section class="stack-wrap">
+      <div class="stack-label">Test section</div>
+
+      <article class="card">
+        <div class="pill">
+          <span class="pill-dot"></span>
+          TEST 01
+        </div>
+        <div class="card-title">Basic information</div>
+        <h2>Welcome to the test page</h2>
+        <p>
+          This card is here just to test the layout and scroll behavior.
+          You can replace this text later with any real content you need.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="pill">
+          <span class="pill-dot"></span>
+          TEST 02
+        </div>
+        <div class="card-title">Scroll demo</div>
+        <h2>Watch the cards stack on scroll</h2>
+        <p>
+          When you scroll down, this card will move up and overlap the first
+          card so you can check that the stacking animation works correctly.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="pill">
+          <span class="pill-dot"></span>
+          TEST 03
+        </div>
+        <div class="card-title">Placeholder text</div>
+        <h2>Use this area for testing</h2>
+        <p>
+          Use this card to try different lengths of text, headings, or buttons
+          to see how the design looks with your own sample content.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="pill">
+          <span class="pill-dot"></span>
+          TEST 04
+        </div>
+        <div class="card-title">Layout check</div>
+        <h2>Check spacing and overlap</h2>
+        <p>
+          Scroll slowly and notice the distance between the cards, the sticky
+          position, and the overlap effect while testing on different screens.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="pill">
+          <span class="pill-dot"></span>
+          TEST 05
+        </div>
+        <div class="card-title">Ready to customize</div>
+        <h2>Replace test content anytime</h2>
+        <p>
+          When your tests are done, simply change these titles and paragraphs
+          to real content while keeping the same scroll animation structure.
+        </p>
+      </article>
+    </section>
+  </main>
+</body>
+</html>
