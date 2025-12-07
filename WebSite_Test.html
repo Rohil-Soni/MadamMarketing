@@ -8,8 +8,8 @@
             :root {
                 --bg: #050509;
                 --card: #06050a;
-                --accent: #ff1a3c;      /* bright red */
-                --accent-soft: #ff4b68; /* soft red */
+                --accent: #ff1a3c;
+                --accent-soft: #ff4b68;
                 --top: 90px;
                 --gap: 16px;
             }
@@ -20,8 +20,12 @@
                 padding: 0;
             }
 
+            html {
+                scroll-behavior: smooth;
+            }
+
             body {
-                min-height: 200vh;
+                min-height: 100vh;
                 font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
                 color: #f9fafb;
                 background-color: var(--bg);
@@ -31,29 +35,63 @@
                 radial-gradient(circle at 50% 100%, rgba(255, 26, 60, 0.22) 0, transparent 60%),
                 radial-gradient(circle at 10% 80%, rgba(255, 255, 255, 0.02) 0, transparent 55%);
                 background-attachment: fixed;
+                perspective: 1000px;
             }
 
-            /* subtle grain effect */
             body::before {
                 content: "";
                 position: fixed;
                 inset: -40px;
                 pointer-events: none;
-                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='noStitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.16'/%3E%3C/svg%3E");
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cfilter id='n'%3E%3CfeTurbulance type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='noStitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.16'/%3E%3C/svg%3E");
                 mix-blend-mode: soft-light;
                 z-index: -1;
             }
 
-            /* Navigation Bar */
+            /* Liquid Glass Navigation Bar */
             nav {
                 position: fixed;
                 top: 0;
                 width: 100%;
-                background: rgba(5, 5, 9, 0.95);
-                backdrop-filter: blur(10px);
-                border-bottom: 1px solid rgba(255, 26, 60, 0.2);
+                background: rgba(255, 255, 255, 0.05);
+                backdrop-filter: blur(50px) saturate(200%);
+                -webkit-backdrop-filter: blur(50px) saturate(200%);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+                box-shadow: 
+                    0 8px 32px rgba(0, 0, 0, 0.5),
+                    0 4px 16px rgba(255, 255, 255, 0.05),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+                    inset 0 -1px 0 rgba(0, 0, 0, 0.3);
                 z-index: 1000;
                 padding: 16px 6vw;
+                transform-style: preserve-3d;
+            }
+
+            nav::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 2px;
+                background: linear-gradient(90deg, 
+                    transparent, 
+                    rgba(255, 255, 255, 0.3) 20%,
+                    rgba(255, 26, 60, 0.5) 50%,
+                    rgba(255, 255, 255, 0.3) 80%,
+                    transparent);
+                filter: blur(1px);
+            }
+
+            nav::after {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: linear-gradient(135deg, 
+                    rgba(255, 255, 255, 0.1) 0%, 
+                    transparent 50%,
+                    rgba(255, 255, 255, 0.05) 100%);
+                pointer-events: none;
             }
 
             .nav-container {
@@ -62,16 +100,24 @@
                 align-items: center;
                 max-width: 1200px;
                 margin: 0 auto;
+                transform: translateZ(20px);
             }
 
             .nav-logo {
                 font-size: 1.3rem;
                 font-weight: 700;
                 color: white;
+                text-shadow: 
+                    0 0 20px rgba(255, 255, 255, 0.4),
+                    0 2px 4px rgba(0, 0, 0, 0.3);
             }
 
             .nav-logo span {
                 color: var(--accent);
+                text-shadow: 
+                    0 0 30px rgba(255, 26, 60, 0.8),
+                    0 0 60px rgba(255, 26, 60, 0.4),
+                    0 2px 4px rgba(0, 0, 0, 0.3);
             }
 
             .nav-menu {
@@ -81,33 +127,60 @@
             }
 
             .nav-menu a {
-                color: #e5e7eb;
+                color: rgba(255, 255, 255, 0.9);
                 text-decoration: none;
                 font-size: 0.95rem;
-                transition: color 0.3s ease;
+                transition: all 0.3s ease;
+                position: relative;
+                padding: 8px 16px;
+                border-radius: 12px;
+            }
+
+            .nav-menu a::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: rgba(255, 255, 255, 0.08);
+                border: 1px solid rgba(255, 255, 255, 0.15);
+                border-radius: 12px;
+                opacity: 0;
+                transition: all 0.3s ease;
+                box-shadow: 
+                    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+                    0 4px 12px rgba(0, 0, 0, 0.2);
             }
 
             .nav-menu a:hover {
                 color: var(--accent);
+                text-shadow: 0 0 20px rgba(255, 26, 60, 0.6);
+            }
+
+            .nav-menu a:hover::before {
+                opacity: 1;
             }
 
             .hamburger {
                 display: none;
                 flex-direction: column;
                 cursor: pointer;
-                gap: 6px;
+                gap: 5px;
+                padding: 8px;
+                position: relative;
+                z-index: 1001;
             }
 
             .hamburger span {
                 width: 25px;
-                height: 3px;
+                height: 2px;
                 background: var(--accent);
                 border-radius: 2px;
                 transition: all 0.3s ease;
+                box-shadow: 0 0 15px rgba(255, 26, 60, 0.6);
+                display: block;
             }
 
             .hamburger.active span:nth-child(1) {
-                transform: rotate(45deg) translate(10px, 10px);
+                transform: rotate(45deg) translate(6px, 6px);
             }
 
             .hamburger.active span:nth-child(2) {
@@ -115,12 +188,72 @@
             }
 
             .hamburger.active span:nth-child(3) {
-                transform: rotate(-45deg) translate(7px, -7px);
+                transform: rotate(-45deg) translate(6px, -6px);
             }
 
+            /* Back to Top Button */
+            .back-to-top {
+                position: fixed;
+                bottom: 40px;
+                right: 40px;
+                width: 50px;
+                height: 50px;
+                background: rgba(255, 26, 60, 0.2);
+                backdrop-filter: blur(30px);
+                -webkit-backdrop-filter: blur(30px);
+                border: 1px solid rgba(255, 26, 60, 0.6);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+                z-index: 999;
+                box-shadow: 
+                    0 8px 24px rgba(255, 26, 60, 0.4),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            }
+
+            .back-to-top.visible {
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .back-to-top:hover {
+                transform: translateY(-4px);
+                box-shadow: 
+                    0 16px 48px rgba(255, 26, 60, 0.6),
+                    inset 0 2px 0 rgba(255, 255, 255, 0.4);
+            }
+
+            .back-to-top::before {
+                content: "↑";
+                font-size: 24px;
+                color: white;
+                text-shadow: 0 0 20px rgba(255, 26, 60, 0.8);
+            }
+
+            /* Liquid Glass Header */
             header {
                 padding: 120px 6vw 80px;
                 text-align: center;
+                position: relative;
+                transform-style: preserve-3d;
+            }
+
+            header::before {
+                content: "";
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 600px;
+                height: 600px;
+                background: radial-gradient(circle, rgba(255, 26, 60, 0.2), transparent 70%);
+                filter: blur(100px);
+                pointer-events: none;
             }
 
             header h1 {
@@ -129,10 +262,19 @@
                 letter-spacing: 0.08em;
                 text-transform: uppercase;
                 text-align: center;
+                position: relative;
+                text-shadow: 
+                    0 0 40px rgba(255, 255, 255, 0.3),
+                    0 4px 8px rgba(0, 0, 0, 0.4);
+                transform: translateZ(30px);
             }
 
             header h1 span {
                 color: var(--accent);
+                text-shadow: 
+                    0 0 50px rgba(255, 26, 60, 1),
+                    0 0 100px rgba(255, 26, 60, 0.5),
+                    0 4px 8px rgba(0, 0, 0, 0.4);
             }
 
             header p {
@@ -141,65 +283,150 @@
                 margin-left: auto;
                 margin-right: auto;
                 font-size: 0.96rem;
-                color: #e5e7eb;
-                opacity: 0.85;
+                color: rgba(255, 255, 255, 0.85);
                 text-align: center;
+                position: relative;
+                transform: translateZ(20px);
             }
 
             main {
                 width: min(900px, 92vw);
                 margin: 0 auto;
-                padding-bottom: 60vh;
+                padding-bottom: 100px;
+                transform-style: preserve-3d;
             }
 
             .stack-wrap {
                 margin-top: 40px;
-                padding: 32px 0 120px;
+                padding: 32px 0 0;
                 position: relative;
             }
 
             .stack-label {
                 position: sticky;
-                top: 100px;
+                top: 110px;
                 margin-bottom: 24px;
                 font-size: 0.78rem;
                 text-transform: uppercase;
                 letter-spacing: 0.16em;
-                color: #9ca3af;
+                color: rgba(255, 255, 255, 0.6);
+                z-index: 10;
             }
 
             .stack-label span {
                 color: var(--accent-soft);
+                text-shadow: 0 0 25px rgba(255, 26, 60, 0.7);
             }
 
+            /* ALL CARDS SAME SIZE - NO INTERNAL SCROLL */
             .card {
                 position: sticky;
                 top: var(--top);
-                margin-bottom: var(--gap);
-                padding: 24px 22px 22px;
-                border-radius: 20px;
-                background:
-                linear-gradient(135deg, rgba(255, 26, 60, 0.12), transparent 45%),
-                radial-gradient(circle at top left, rgba(255, 255, 255, 0.08) 0, transparent 55%),
-                var(--card);
-                border: 1px solid rgba(248, 250, 252, 0.05);
-                box-shadow:
-                0 28px 60px rgba(0, 0, 0, 0.9),
-                0 0 0 1px rgba(15, 23, 42, 0.9);
-                transform-origin: top center;
-                backdrop-filter: blur(18px);
-                -webkit-backdrop-filter: blur(18px);
+                width: 100%;
+                height: 420px; /* Fixed height for ALL cards */
+                padding: 32px;
+                margin-bottom: calc(var(--gap) * 2);
+                border-radius: 28px;
+                background: rgba(255, 255, 255, 0.04);
+                backdrop-filter: blur(60px) saturate(200%);
+                -webkit-backdrop-filter: blur(60px) saturate(200%);
+                border: 1px solid rgba(255, 255, 255, 0.18);
+                box-shadow: 
+                    0 8px 32px rgba(0, 0, 0, 0.7),
+                    0 16px 64px rgba(0, 0, 0, 0.4),
+                    0 2px 8px rgba(255, 255, 255, 0.1),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+                    inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+                    inset 2px 0 0 rgba(255, 255, 255, 0.1),
+                    inset -2px 0 0 rgba(0, 0, 0, 0.1);
                 overflow: hidden;
                 transition:
-                transform 0.25s ease,
-                box-shadow 0.25s ease,
-                border-color 0.25s ease;
+                    transform 0.3s ease,
+                    box-shadow 0.3s ease,
+                    border-color 0.3s ease;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                transform-style: preserve-3d;
+            }
+
+            /* Multi-layered glass depth effect */
+            .card::before {
+                content: "";
+                position: absolute;
+                top: -50%;
+                left: -50%;
+                width: 200%;
+                height: 200%;
+                background: linear-gradient(
+                    45deg,
+                    transparent 30%,
+                    rgba(255, 255, 255, 0.12) 50%,
+                    transparent 70%
+                );
+                transform: rotate(45deg);
+                transition: all 0.8s ease;
+                pointer-events: none;
+            }
+
+            .card::after {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: 
+                    radial-gradient(circle at top left, rgba(255, 255, 255, 0.15) 0%, transparent 40%),
+                    radial-gradient(circle at bottom right, rgba(255, 26, 60, 0.12) 0%, transparent 50%);
+                border-radius: 28px;
+                pointer-events: none;
+            }
+
+            /* Inner glass layer for more depth */
+            .card > * {
+                position: relative;
+                z-index: 2;
             }
 
             .card:hover {
-                transform: translateY(-6px) scale(1.02);
-                box-shadow: 0 30px 60px rgba(255, 26, 60, 0.2);
+                transform: translateY(-8px) scale(1.01);
+                box-shadow: 
+                    0 24px 80px rgba(255, 26, 60, 0.35),
+                    0 32px 120px rgba(0, 0, 0, 0.6),
+                    0 4px 16px rgba(255, 255, 255, 0.15),
+                    0 0 0 1px rgba(255, 255, 255, 0.25),
+                    inset 0 2px 0 rgba(255, 255, 255, 0.35),
+                    inset 0 -2px 0 rgba(0, 0, 0, 0.2),
+                    inset 4px 0 0 rgba(255, 255, 255, 0.15),
+                    inset -4px 0 0 rgba(0, 0, 0, 0.15);
                 border-color: rgba(255, 26, 60, 0.6);
+            }
+
+            .card:hover::before {
+                top: 120%;
+                left: 120%;
+            }
+
+            /* Last card - EXACTLY SAME as others */
+            .card:last-child {
+                position: sticky; /* Same sticky positioning */
+                height: 420px; /* EXACT same height */
+                padding: 32px; /* EXACT same padding */
+                margin-bottom: calc(var(--gap) * 2); /* SAME margin as others */
+                transform: scale(0.95); /* Proper stacking scale */
+            }
+
+            /* Adjusted stacking depth effect - INCLUDING LAST CARD */
+            .card:nth-child(2) { transform: scale(0.99); }
+            .card:nth-child(3) { transform: scale(0.98); }
+            .card:nth-child(4) { transform: scale(0.97); }
+            .card:nth-child(5) { transform: scale(0.96); }
+            .card:nth-child(6) { transform: scale(0.95); } /* Last card gets proper scale */
+
+            .card:nth-child(2):hover,
+            .card:nth-child(3):hover,
+            .card:nth-child(4):hover,
+            .card:nth-child(5):hover,
+            .card:nth-child(6):hover { /* Include last card in hover */
+                transform: translateY(-8px) scale(1.01) !important;
             }
 
             .card-title {
@@ -209,29 +436,41 @@
                 color: var(--accent);
                 margin-bottom: 12px;
                 font-weight: 600;
+                text-shadow: 
+                    0 0 25px rgba(255, 26, 60, 0.7),
+                    0 2px 4px rgba(0, 0, 0, 0.3);
+                transform: translateZ(10px);
             }
 
             .card h2 {
-                font-size: 1.4rem;
-                margin-bottom: 12px;
+                font-size: 1.3rem;
+                margin-bottom: 14px;
                 color: white;
                 font-weight: 700;
+                text-shadow: 
+                    0 0 20px rgba(255, 255, 255, 0.3),
+                    0 4px 12px rgba(0, 0, 0, 0.4);
+                transform: translateZ(8px);
             }
 
             .card p {
-                font-size: 0.95rem;
-                color: #d1d5db;
-                line-height: 1.6;
+                font-size: 0.92rem;
+                color: rgba(255, 255, 255, 0.85);
+                line-height: 1.55;
+                flex-grow: 1;
+                transform: translateZ(5px);
             }
 
             .card ul {
                 list-style: none;
-                margin-top: 12px;
+                margin-top: 10px;
+                flex-grow: 1;
+                transform: translateZ(5px);
             }
 
             .card ul li {
-                font-size: 0.95rem;
-                color: #d1d5db;
+                font-size: 0.9rem;
+                color: rgba(255, 255, 255, 0.85);
                 padding: 8px 0;
                 padding-left: 24px;
                 position: relative;
@@ -242,52 +481,109 @@
                 position: absolute;
                 left: 0;
                 color: var(--accent);
-                font-size: 1.2rem;
+                font-size: 1.1rem;
+                text-shadow: 0 0 20px rgba(255, 26, 60, 0.8);
             }
 
+            /* Enhanced Liquid Glass Button */
             .cta-button {
-                background: linear-gradient(135deg, var(--accent), var(--accent-soft));
-                border: none;
-                padding: 14px 28px;
+                background: rgba(255, 26, 60, 0.15);
+                backdrop-filter: blur(30px);
+                -webkit-backdrop-filter: blur(30px);
+                border: 1px solid rgba(255, 26, 60, 0.6);
+                padding: 12px 24px;
                 color: white;
                 font-weight: 700;
-                border-radius: 8px;
+                border-radius: 14px;
                 cursor: pointer;
-                font-size: 0.95rem;
-                transition: all 0.3s ease;
+                font-size: 0.9rem;
+                transition: all 0.4s ease;
                 display: inline-block;
-                margin-top: 12px;
+                margin-top: 16px;
+                width: fit-content;
+                position: relative;
+                box-shadow: 
+                    0 8px 24px rgba(255, 26, 60, 0.4),
+                    0 4px 12px rgba(0, 0, 0, 0.3),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+                    inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+                text-shadow: 0 0 25px rgba(255, 26, 60, 1);
+                transform: translateZ(15px);
+            }
+
+            .cta-button::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: linear-gradient(135deg, 
+                    rgba(255, 255, 255, 0.2), 
+                    rgba(255, 26, 60, 0.3),
+                    rgba(255, 75, 104, 0.2));
+                border-radius: 14px;
+                opacity: 0;
+                transition: opacity 0.4s ease;
             }
 
             .cta-button:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 12px 24px rgba(255, 26, 60, 0.4);
+                transform: translateZ(25px) translateY(-4px);
+                box-shadow: 
+                    0 16px 48px rgba(255, 26, 60, 0.6),
+                    0 8px 24px rgba(0, 0, 0, 0.4),
+                    inset 0 2px 0 rgba(255, 255, 255, 0.4),
+                    inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+                border-color: rgba(255, 26, 60, 1);
+            }
+
+            .cta-button:hover::before {
+                opacity: 1;
             }
 
             .accent {
                 color: var(--accent-soft);
             }
 
-            /* depth illusion */
-            .card:nth-child(2) { transform: scale(0.997); }
-            .card:nth-child(3) { transform: scale(0.994); }
-            .card:nth-child(4) { transform: scale(0.991); }
-            .card:nth-child(5) { transform: scale(0.988); }
+            @media (max-width: 768px) {
+                .card {
+                    padding: 24px;
+                    height: 450px;
+                }
+
+                .card:last-child {
+                    height: 450px; /* Same as others */
+                    padding: 24px; /* Same as others */
+                    margin-bottom: calc(var(--gap) * 2); /* Same as others */
+                }
+
+                .card h2 {
+                    font-size: 1.15rem;
+                }
+
+                .back-to-top {
+                    bottom: 20px;
+                    right: 20px;
+                    width: 45px;
+                    height: 45px;
+                }
+            }
 
             @media (max-width: 640px) {
-                :root { --top: 72px; }
-                
+                :root {
+                    --top: 80px;
+                }
+
                 .nav-menu {
                     display: none;
                     position: absolute;
-                    top: 70px;
+                    top: 65px;
                     left: 0;
                     width: 100%;
                     flex-direction: column;
                     background: rgba(5, 5, 9, 0.98);
+                    backdrop-filter: blur(50px);
                     padding: 20px;
                     gap: 16px;
-                    border-bottom: 1px solid rgba(255, 26, 60, 0.2);
+                    border-bottom: 1px solid rgba(255, 26, 60, 0.3);
+                    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
                 }
 
                 .nav-menu.active {
@@ -307,15 +603,42 @@
                 }
 
                 .stack-wrap { 
-                    margin-top: 28px; 
+                    margin-top: 28px;
+                }
+
+                .stack-label {
+                    top: 90px;
                 }
 
                 .card { 
-                    padding: 20px 16px 18px;
+                    padding: 20px;
+                    height: 380px;
+                }
+
+                .card:last-child {
+                    height: 380px; /* Same as others */
+                    padding: 20px; /* Same as others */
+                    margin-bottom: calc(var(--gap) * 2); /* Same as others */
                 }
 
                 .card h2 {
-                    font-size: 1.2rem;
+                    font-size: 1.05rem;
+                    margin-bottom: 10px;
+                }
+
+                .card p {
+                    font-size: 0.88rem;
+                }
+
+                .card ul li {
+                    font-size: 0.83rem;
+                    padding: 6px 0;
+                }
+
+                .cta-button {
+                    padding: 10px 20px;
+                    font-size: 0.85rem;
+                    margin-top: 12px;
                 }
             }
         </style>
@@ -326,7 +649,7 @@
             <div class="nav-container">
                 <div class="nav-logo">Madame <span>Marketing</span></div>
                 <ul class="nav-menu" id="navMenu">
-                    <li><a herf="#Home">Home</a></li>
+                    <li><a href="#home">Home</a></li>
                     <li><a href="#services">Services</a></li>
                     <li><a href="#process">Process</a></li>
                     <li><a href="#portfolio">Portfolio</a></li>
@@ -340,7 +663,9 @@
             </div>
         </nav>
 
-        <header>
+        <div class="back-to-top" id="backToTop"></div>
+
+        <header id="home">
             <h1>Madame <span>Marketing</span></h1>
             <p>Bold, creative marketing strategies that make your brand stand tall. We turn visions into powerful campaigns.</p>
         </header>
@@ -352,7 +677,7 @@
                 <article class="card">
                     <div class="card-title">Who We Are</div>
                     <h2>Creative Excellence Redefined</h2>
-                    <p>Madame Marketing is a full-service creative agency specializing in bold, modern brand development. We believe in pushing boundaries and creating marketing that not only captures attention but inspires action. Our team of strategists, designers, and digital experts work together to transform your brand's vision into reality.</p>
+                    <p>Madame Marketing is a full-service creative agency specializing in bold, modern brand development. We believe in pushing boundaries and creating marketing that not only captures attention but inspires action.</p>
                 </article>
 
                 <article class="card">
@@ -361,12 +686,12 @@
                     <ul>
                         <li>Brand Strategy & Development</li>
                         <li>Logo & Visual Identity Design</li>
-                        <li>Social Media Management & Content Creation</li>
-                        <li>Reels, Videos & Motion Graphics</li>
+                        <li>Social Media Management</li>
+                        <li>Video & Motion Graphics</li>
                         <li>Professional Photography</li>
                         <li>Package & Label Design</li>
-                        <li>Collateral & Print Materials</li>
-                        <li>Digital Marketing Campaigns</li>
+                        <li>Print Materials</li>
+                        <li>Digital Campaigns</li>
                     </ul>
                 </article>
 
@@ -374,10 +699,10 @@
                     <div class="card-title">Our Process</div>
                     <h2>From Concept to Campaign</h2>
                     <ul>
-                        <li><strong>Discovery Call:</strong> Understanding your brand, goals & vision</li>
-                        <li><strong>Strategy & Planning:</strong> Developing a tailored marketing roadmap</li>
-                        <li><strong>Creative Execution:</strong> Bringing concepts to life with design & content</li>
-                        <li><strong>Launch & Optimization:</strong> Deploying campaigns and measuring results</li>
+                        <li><strong>Discovery:</strong> Understanding your brand & vision</li>
+                        <li><strong>Strategy:</strong> Developing marketing roadmap</li>
+                        <li><strong>Execution:</strong> Bringing concepts to life</li>
+                        <li><strong>Launch:</strong> Deploying and measuring results</li>
                     </ul>
                 </article>
 
@@ -399,16 +724,35 @@
         <script>
             const hamburger = document.getElementById('hamburger');
             const navMenu = document.getElementById('navMenu');
+            const backToTop = document.getElementById('backToTop');
 
+            // Hamburger menu toggle
             hamburger.addEventListener('click', () => {
                 hamburger.classList.toggle('active');
                 navMenu.classList.toggle('active');
             });
 
+            // Close menu when link is clicked
             document.querySelectorAll('.nav-menu a').forEach(link => {
                 link.addEventListener('click', () => {
                     hamburger.classList.remove('active');
                     navMenu.classList.remove('active');
+                });
+            });
+
+            // Back to top button functionality
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) {
+                    backToTop.classList.add('visible');
+                } else {
+                    backToTop.classList.remove('visible');
+                }
+            });
+
+            backToTop.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
                 });
             });
         </script>
